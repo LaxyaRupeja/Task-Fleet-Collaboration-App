@@ -1,0 +1,28 @@
+<div class="ml-[260px] mt-5 px-4">
+  <nav class="flex items-center justify-between border-b pb-3">
+    <h1 class="text-4xl font-semibold">Notifications</h1>
+    <button
+      type="button"
+      class="px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    >
+      Mark as Read
+    </button>
+  </nav>
+  <div *ngIf="notifications.length == 0">
+    <h1 class="text-4xl">No notifications at the moment</h1>
+  </div>
+  <div class="flex flex-col gap-2 pt-4">
+    <div
+      class="flex flex-col gap-1 rounded-lg border p-4"
+      *ngFor="let noti of notifications"
+    >
+      <p class="text-xl">{{ noti.title }}</p>
+      <div class="flex items-center justify-between gap-2">
+        <p class="text-sm truncate max-w-3xl text-gray-700">
+          {{ noti.message }}
+        </p>
+        <p class="text-sm">{{ noti.timestamp }}</p>   
+      </div>
+    </div>
+  </div>
+</div>

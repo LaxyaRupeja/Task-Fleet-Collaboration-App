@@ -1,0 +1,263 @@
+<!-- Card Blog -->
+<dialog id="my_modal_3" class="modal">
+  <div class="relative w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          ✕
+        </button>
+      </form>
+      <div class="px-6 py-6 lg:px-8">
+        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+          Start a New Project
+        </h3>
+        <form class="space-y-2" name="newProject" (ngSubmit)="onSubmit()">
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Name of the Project</label
+            >
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              placeholder="Enter project name"
+              [(ngModel)]="newProject.projectName"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="description"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Project Description</label
+            >
+            <textarea
+              id="description"
+              rows="3"
+              name="description"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter project description"
+              [(ngModel)]="newProject.description"
+            ></textarea>
+          </div>
+          <div>
+            <label
+              for="start"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Start/End - Date</label
+            >
+            <div class="flex items-center">
+              <div>
+                <input
+                  name="start"
+                  type="date"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Select date start"
+                  [(ngModel)]="newProject.startDate"
+                />
+              </div>
+              <span class="mx-4 text-gray-500">to</span>
+              <div class="relative">
+                <input
+                  name="end"
+                  type="date"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Select date end"
+                  [(ngModel)]="newProject.endDate"
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            data-modal-hide="authentication-modal"
+            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mt-2 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Create a New Project
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<div
+  class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto ml-[250px] mt-6 flex justify-between flex-col"
+>
+  <div class="flex items-center justify-between mb-2">
+    <h1 class="text-4xl font-semibold">
+      {{ activeTab == "my_projects" ? "My Projects" : "Joined Projects" }}
+    </h1>
+    <button
+      type="button"
+      class="w-[20%] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 place-self-end"
+      onclick="my_modal_3.showModal()"
+    >
+      Add Project
+    </button>
+  </div>
+  <div
+    class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 mb-3"
+  >
+    <ul class="flex flex-wrap -mb-px">
+      <li class="mr-2 select-none">
+        <a
+          [class]="activeTab === 'my_projects' ? 'active-tab' : 'inactive-tab'"
+          (click)="selectTab('my_projects')"
+        >
+          My Projects
+        </a>
+      </li>
+      <li class="mr-2 select-none">
+        <a
+          [class]="activeTab !== 'my_projects' ? 'active-tab' : 'inactive-tab'"
+          (click)="selectTab('joined_projects')"
+        >
+          Joined Projects
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- Grid -->
+  <div
+    class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    *ngIf="activeTab === 'my_projects'"
+  >
+    <!-- Card -->
+
+    <div *ngIf="allProjects.length == 0">
+      <h1 class="text-xl">
+        Oops! No projects found. Start by creating a project to get organized
+        and collaborate.
+      </h1>
+    </div>
+    <div
+      *ngFor="let project of allProjects"
+      class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] overflow-hidden"
+    >
+      <div
+        class="h-52 flex flex-col justify-center items-center bg-amber-500 rounded-t-xl"
+      >
+        <!-- Replace with project information -->
+        <img
+          src="https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg"
+          alt=""
+        />
+      </div>
+      <div class="p-4 md:p-6">
+        <h3
+          class="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white"
+        >
+          {{ project.projectName }}
+        </h3>
+        <p class="mt-3 text-gray-500">
+          {{ project.description }}
+        </p>
+        <p class="mt-1 text-gray-600 font-semibold flex items-center">
+          <img
+            class="h-[40px] w-[40px]"
+            src="https://thenounproject.com/api/private/icons/4122552/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0"
+            alt=""
+          />
+          Members: {{ project.members.length }}
+          <!-- Display number of members -->
+        </p>
+        <p class="text-gray-600 font-semibold flex items-center gap-2">
+          <img
+            class="h-[30px] w-[30px]"
+            src="https://icons.veryicon.com/png/o/miscellaneous/esgcc-basic-icon-library/date-71.png"
+            alt=""
+          />
+          {{ project.startDate | date }} - {{ project.endDate | date }}
+        </p>
+      </div>
+      <div
+        class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-gray-700 dark:divide-gray-700"
+      >
+        <!-- Change button text to match your requirements -->
+        <a
+          class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-bl-xl font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm sm:p-4 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+          routerLink="/projects/my/{{ project._id }}"
+        >
+          View Project
+        </a>
+        <a
+          class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-br-xl font-medium bg-red-600 text-white shadow-sm align-middle hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm sm:p-4 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+        >
+          Delete Project
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    *ngIf="activeTab != 'my_projects'"
+  >
+    <div *ngIf="joinedProjects.length == 0">
+      <h1 class="text-xl">
+        Oops! No projects found. Start by joining a project to get organized and
+        collaborate.
+      </h1>
+    </div>
+    <div
+      *ngFor="let project of joinedProjects"
+      class="group flex flex-col h-full bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] overflow-hidden"
+    >
+      <div
+        class="h-52 flex flex-col justify-center items-center bg-amber-500 rounded-t-xl"
+      >
+        <!-- Replace with project information -->
+        <img
+          src="https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg"
+          alt=""
+        />
+      </div>
+      <div class="p-4 md:p-6">
+        <h3
+          class="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white"
+        >
+          {{ project.projectName }}
+        </h3>
+        <p class="mt-3 text-gray-500">
+          {{ project.description }}
+        </p>
+        <p class="mt-1 text-gray-600 font-semibold flex items-center">
+          <img
+            class="h-[40px] w-[40px]"
+            src="https://thenounproject.com/api/private/icons/4122552/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0"
+            alt=""
+          />
+          Members: {{ project.members.length }}
+        </p>
+        <p class="text-gray-600 font-semibold flex items-center gap-2">
+          <img
+            class="h-[30px] w-[30px]"
+            src="https://icons.veryicon.com/png/o/miscellaneous/esgcc-basic-icon-library/date-71.png"
+            alt=""
+          />
+          {{ project.startDate | date }} - {{ project.endDate | date }}
+        </p>
+      </div>
+      <div
+        class="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-gray-700 dark:divide-gray-700"
+      >
+        <!-- Change button text to match your requirements -->
+        <a
+          class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-bl-xl font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm sm:p-4 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+          routerLink="/projects/joined/{{ project._id }}"
+        >
+          View Project
+        </a>
+        <a
+          class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-br-xl font-medium bg-red-600 text-white shadow-sm align-middle hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm sm:p-4 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+        >
+          Delete Project
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Poppins&display=swap");
+/* Your Tailwind CSS configuration or in your HTML file where you include Tailwind CSS */
+
+/* Define the styles for the active tab */
+.active-tab {
+  display: inline-block;
+  padding: 14px 16px;
+  /* padding: 15px; */
+  border-bottom: 2px solid #3b82f6; /* Adjust color as needed */
+  border-radius: 10px 10px 0 0;
+  color: #3b82f6;
+  cursor: pointer;
+}
+.inactive-tab {
+  display: inline-block;
+  padding: 14px 16px;
+  /* padding: 15px; */
+  border-radius: 10px 10px 0 0;
+  /* color: #3b82f6; */
+  cursor: pointer;
+}
+
+.active-tab:hover {
+  border-bottom: 2px solid #3b82f6; /* Adjust color as needed */
+  color: #3b82f6;
+}
+
+.active-tab.dark {
+  color: #93c5fd; /* Adjust color for dark mode */
+}
+
+.active-tab.dark:hover {
+  border-bottom: 2px solid #93c5fd; /* Adjust color for dark mode */
+  color: #93c5fd;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+.backdropBackground {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
